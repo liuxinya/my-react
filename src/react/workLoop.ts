@@ -10,6 +10,7 @@ export function workLoop (deadline: IdleDeadline) {
         shouldYield = deadline.timeRemaining() < 1
     }
 
+    // 没有下一个工作单元 且 有根节点 一次性 commit
     if (!myReact.nextUnitOfWork && myReact.wipRoot) {
         commitRoot();
     }

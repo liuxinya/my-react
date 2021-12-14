@@ -1,6 +1,6 @@
+import {Fiber} from './../interface';
 import {createElement} from './createElement';
 import {render} from './render';
-import {Fiber} from '../interface';
 import {workLoop} from './workLoop';
 
 class MyReact {
@@ -10,8 +10,12 @@ class MyReact {
     }
     // 保存下一个工作单元
     private _nextUnitOfWork: Fiber = null;
-    private _wipRoot: Fiber = null;
     // 保存根节点
+    private _wipRoot: Fiber = null;
+    // 保存根节点更新前的 fiber tree
+    private _currentRoot: Fiber = null;
+    // 保存每次变动 需要删除的fiber集合
+    private _deletions: Fiber[] = [];
     get nextUnitOfWork() {
         return this._nextUnitOfWork;
     }
@@ -24,8 +28,24 @@ class MyReact {
     set wipRoot(fiber: Fiber) {
         this._wipRoot = fiber;
     }
-    createElement = createElement;
-    render = render;
+    get deletions() {
+        return this._deletions;
+    }
+    set deletions(delArr: Fiber[] ) {
+        this._deletions = delArr;
+    }
+    get currentRoot() {
+        return this._currentRoot;
+    }
+    set currentRoot(fiber: Fiber) {
+        this._currentRoot = fiber;
+    }
+    get createElement() {
+        return createElement;
+    }
+    get render() {
+        return render;
+    }
 };
 
 

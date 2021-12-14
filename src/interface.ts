@@ -13,9 +13,11 @@ export interface VirtualDomObj {
 
 export interface Fiber {
     type: NodeType,
-    dom: HTMLElement | Text | null,
-    child: Fiber | null,
-    parent: Fiber | null,
+    dom: HTMLElement | Text,
+    child: Fiber,
+    parent: Fiber,
     sibling: Fiber,
-    props: NodeProps
+    props: NodeProps,
+    alternate: Fiber,
+    effectTag: 'UPDATE' | 'PLACEMENT' | 'DELETION'
 }
