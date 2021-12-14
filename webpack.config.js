@@ -12,6 +12,7 @@ module.exports = {
         open: true,
         port: 3000,
     },
+    devtool: "source-map" ,
     resolve: {
         extensions: [".ts", ".tsx", ".js"]
     },
@@ -26,6 +27,7 @@ module.exports = {
             }
         ]
     },
+    
     plugins: [
         new htmlWebpackPlugin({
             template: path.join(__dirname, "./public/index.html"),
