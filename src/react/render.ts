@@ -3,7 +3,7 @@ import {VirtualDomObj} from '../interface';
 import {myReact} from './index';
 
 export function render(element: VirtualDomObj, container: HTMLElement) {
-    myReact.nextUnitOfWork = {
+    myReact.wipRoot = {
         dom: container,
         props: {
             children: [element]
@@ -13,4 +13,5 @@ export function render(element: VirtualDomObj, container: HTMLElement) {
         parent: null,
         type: null,
     }
+    myReact.nextUnitOfWork = myReact.wipRoot;
 }

@@ -6,9 +6,9 @@ export function performUnitOfWork(fiber: Fiber) {
         fiber.dom = createDom(fiber)
     }
 
-    if (fiber.parent) {
-        fiber.parent.dom.appendChild(fiber.dom)
-    }
+    // if (fiber.parent) {
+    //     fiber.parent.dom.appendChild(fiber.dom)
+    // }
     let index = 0;
     const elements = fiber.props.children;
     // 用来记录上个fiber

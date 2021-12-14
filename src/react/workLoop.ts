@@ -1,5 +1,6 @@
 import {performUnitOfWork} from './performUnitOfWork';
 import {myReact} from './index';
+import {commitRoot} from './commit';
 
 export function workLoop (deadline: IdleDeadline) {
     let shouldYield = false
@@ -7,6 +8,10 @@ export function workLoop (deadline: IdleDeadline) {
     while (myReact.nextUnitOfWork && !shouldYield) {
         myReact.nextUnitOfWork = performUnitOfWork(myReact.nextUnitOfWork)
         shouldYield = deadline.timeRemaining() < 1
+    }
+
+    if (!myReact.nextUnitOfWork && myReact.wipRoot) {
+        commitRoot();
     }
 
     requestIdleCallback(workLoop)
