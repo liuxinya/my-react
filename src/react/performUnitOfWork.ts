@@ -3,16 +3,21 @@ import {createDom} from './createDom';
 import {reconcileChildren} from './reconcileChildren';
 
 export function performUnitOfWork(fiber: Fiber) {
-    if (!fiber.dom) {
-        fiber.dom = createDom(fiber)
+     // 是否是函数类型组件
+     const isFunctionComponent = fiber && fiber.type && (fiber.type as unknown as Function) instanceof Function
+
+     // 如果是函数组件，执行 updateFunctionComponent 函数
+    if (isFunctionComponent) {
+        updateFunctionComponent(fiber)
+    } else {
+        // 如果不是函数组件，执行 updateHostComponent 函数
+        updateHostComponent(fiber)
     }
 
     // if (fiber.parent) {
     //     fiber.parent.dom.appendChild(fiber.dom)
     // }
 
-    const elements = fiber.props.children
-    reconcileChildren(fiber, elements)
     // console.log(fiber)
     // 返回下一个fiber节点
     // 有 child 返回 child
@@ -28,4 +33,20 @@ export function performUnitOfWork(fiber: Fiber) {
         }
         nextFiber = nextFiber.parent
     }
+}
+
+
+function updateFunctionComponent(fiber: Fiber) {
+    // fiber.type 就是函数组件本身，fiber.props 就是函数组件的参数
+    const children = [(fiber.type as unknown as Function)(fiber.props)]
+    // 执行结果就是我们 需要构建的 函数组件类型Fiber的子节点了
+    reconcileChildren(fiber, children)
+}
+
+function updateHostComponent(fiber: Fiber) {
+    if (!fiber.dom) {
+        fiber.dom = createDom(fiber)
+    }
+    const elements = fiber.props.children
+    reconcileChildren(fiber, elements)
 }

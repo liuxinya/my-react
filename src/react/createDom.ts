@@ -14,6 +14,7 @@ const isNew = (prev: Fiber['props'], next: Fiber['props']) => (key: keyof NodePr
 const isEvent = (key: string) => key.startsWith("on")
 
 export function createDom (fiber: Fiber) {
+    console.log(fiber)
     const dom = fiber.type === 'TEXT'
         ? document.createTextNode("")
         : document.createElement(fiber.type)

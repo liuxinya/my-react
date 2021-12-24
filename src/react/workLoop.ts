@@ -6,6 +6,7 @@ export function workLoop (deadline: IdleDeadline) {
     let shouldYield = false
     // 浏览器有空闲时间 且 有下一个工作单元
     while (myReact.nextUnitOfWork && !shouldYield) {
+        // console.log(myReact.nextUnitOfWork);
         myReact.nextUnitOfWork = performUnitOfWork(myReact.nextUnitOfWork)
         shouldYield = deadline.timeRemaining() < 1
     }
