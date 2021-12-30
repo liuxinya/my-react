@@ -42,6 +42,7 @@ export function commitWork(fiber: Fiber) {
 
 
 function commitDeletion(fiber: Fiber, parentDom: HTMLElement) {
+    console.log(fiber, parentDom)
     if (fiber.dom) {
         parentDom.removeChild(fiber.dom)
     } else {

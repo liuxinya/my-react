@@ -1,6 +1,7 @@
 import {Fiber} from '../interface';
 import {createDom} from './createDom';
 import {reconcileChildren} from './reconcileChildren';
+import {myReact} from './index';
 
 export function performUnitOfWork(fiber: Fiber) {
      // 是否是函数类型组件
@@ -37,6 +38,10 @@ export function performUnitOfWork(fiber: Fiber) {
 
 
 function updateFunctionComponent(fiber: Fiber) {
+    myReact.wipFiber = fiber;
+    myReact.wipFiber.hooks = [];
+    myReact.hookIndex = 0;
+    console.log(111111);
     // fiber.type 就是函数组件本身，fiber.props 就是函数组件的参数
     const children = [(fiber.type as unknown as Function)(fiber.props)]
     // 执行结果就是我们 需要构建的 函数组件类型Fiber的子节点了

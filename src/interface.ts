@@ -19,5 +19,11 @@ export interface Fiber {
     sibling: Fiber,
     props: NodeProps,
     alternate: Fiber,
-    effectTag: 'UPDATE' | 'PLACEMENT' | 'DELETION'
+    effectTag: 'UPDATE' | 'PLACEMENT' | 'DELETION',
+    hooks?: Hook[]
+}
+
+export interface Hook<T = any> {
+    state: T,
+    queue: Array<((curr: T) => T)>
 }

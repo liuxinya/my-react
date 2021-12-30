@@ -1,6 +1,7 @@
 import {Fiber} from './../interface';
 import {createElement} from './createElement';
 import {render} from './render';
+import {useState} from './useState';
 import {workLoop} from './workLoop';
 
 class MyReact {
@@ -8,6 +9,10 @@ class MyReact {
         // 启动工作单元循环
         requestIdleCallback(workLoop)
     }
+    // 保存当前hooks索引
+    private _hookIndex: number = 0;
+    // 保存当前工作单元
+    private _wipFiber: Fiber = null;
     // 保存下一个工作单元
     private _nextUnitOfWork: Fiber = null;
     // 保存根节点
@@ -16,6 +21,19 @@ class MyReact {
     private _currentRoot: Fiber = null;
     // 保存每次变动 需要删除的fiber集合
     private _deletions: Fiber[] = [];
+
+    get wipFiber() {
+        return this._wipFiber;
+    }
+    set wipFiber(fiber: Fiber) {
+        this._wipFiber = fiber;
+    }
+    get hookIndex() {
+        return this._hookIndex;
+    }
+    set hookIndex(index: number) {
+        this._hookIndex = index;
+    }
     get nextUnitOfWork() {
         return this._nextUnitOfWork;
     }
@@ -45,6 +63,9 @@ class MyReact {
     }
     get render() {
         return render;
+    }
+    get useState() {
+        return useState;
     }
 };
 
