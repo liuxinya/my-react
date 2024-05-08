@@ -211,7 +211,7 @@ export function performUnitOfWork(fiber: Fiber) {
 
 ![workLoop-render](./images/workLoop-render.png)
 
-## 6、diff 协调 
+# 6、diff 协调 
 
 目的： 减少真实 dom 操作次数
 
